@@ -22,8 +22,10 @@ public class JeuController {
         return verif;
     }
 
-    /*@GetMapping("/genererNombreCarteRetourner")
-    public void genererNombreCarteRetourner(){
-        carte.genererNbRandom();
-    }*/
+
+    @GetMapping("/public/changerNombres")
+    public void changerNombres(){
+        carte.passerProchaineCarte();
+    }
+
 }

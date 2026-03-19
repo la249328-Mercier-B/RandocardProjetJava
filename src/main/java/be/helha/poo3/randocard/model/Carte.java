@@ -37,4 +37,11 @@ public class Carte {
         System.out.println(nbVisible);
         return reponseEntree == (nbVisible < nbAdeviner);
     }
+
+    public void passerProchaineCarte() {
+        this.nbVisible = nbAdeviner;
+        this.nbAdeviner = genererNbRandom();
+        System.out.println(nbAdeviner);
+        System.out.println(nbVisible);
+    }
 }
