@@ -20,7 +20,6 @@ public class JeuController {
 
         Boolean verif=carte.verif(bool);
         return verif;
-
     }
 
     /*@GetMapping("/genererNombreCarteRetourner")
