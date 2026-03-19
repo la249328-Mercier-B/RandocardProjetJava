@@ -39,5 +39,6 @@ public class Carte {
         } else {
             return false; // Mauvaise réponse... On perd un coeur
         }
+
     }
 }
