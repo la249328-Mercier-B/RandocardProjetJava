@@ -1,10 +1,14 @@
 package be.helha.poo3.randocard.model;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Random;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class Carte {
     private int nbAdeviner;
     private int nbVisible;
