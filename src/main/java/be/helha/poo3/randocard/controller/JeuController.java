@@ -22,10 +22,8 @@ public class JeuController {
         return verif;
     }
 
-
     @GetMapping("/public/changerNombres")
     public void changerNombres(){
         carte.passerProchaineCarte();
     }
-
 }
