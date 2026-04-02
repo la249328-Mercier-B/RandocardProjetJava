@@ -2,18 +2,19 @@ package be.helha.poo3.randocard.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Random;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class Carte {
+public class Partie {
     private int nbAdeviner;
     private int nbVisible;
+    private int nbCoeurs = 3;
+    private boolean partieEnCours = true;
 
-    public Carte() {
+    public Partie() {
         this.nbAdeviner = genererNbRandom();
         do {
             this.nbVisible = genererNbRandom();
@@ -43,5 +44,12 @@ public class Carte {
         this.nbAdeviner = genererNbRandom();
         System.out.println(nbAdeviner);
         System.out.println(nbVisible);
+    }
+
+    public void perdreUnCoeur(){
+        this.nbCoeurs--;
+        if (this.nbCoeurs == 0) {
+            this.partieEnCours = false;
+        }
     }
 }

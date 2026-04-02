@@ -1,7 +1,6 @@
 package be.helha.poo3.randocard.controller;
 
-import be.helha.poo3.randocard.model.Carte;
-import org.springframework.http.ResponseEntity;
+import be.helha.poo3.randocard.model.Partie;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,21 +8,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JeuController {
 
-    private final Carte carte;
+    private final Partie partie;
 
     public JeuController() {
-        this.carte=new Carte();
+        this.partie =new Partie();
     }
 
-    @GetMapping("/public/verifierNombre/{grandPetit}")
-    public boolean verifierNombre(@PathVariable("grandPetit") Boolean bool){
+    @GetMapping("/verifierNombre/{grandPetit}")
+    public boolean verifierNombre(@PathVariable("grandPetit") boolean bool){
 
-        Boolean verif=carte.verif(bool);
+        boolean verif= partie.verif(bool);
         return verif;
     }
 
-    @GetMapping("/public/changerNombres")
+    @GetMapping("/changerNombres")
     public void changerNombres(){
-        carte.passerProchaineCarte();
+        partie.passerProchaineCarte();
     }
 }
