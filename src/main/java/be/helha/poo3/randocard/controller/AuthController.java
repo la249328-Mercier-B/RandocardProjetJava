@@ -34,7 +34,7 @@ public class AuthController {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
+                            loginRequest.getPseudo(),
                             loginRequest.getPassword()
                     )
             );
