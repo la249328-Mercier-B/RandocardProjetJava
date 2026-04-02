@@ -42,12 +42,13 @@ public class Partie {
     public void passerProchaineCarte() {
         this.nbVisible = nbAdeviner;
         this.nbAdeviner = genererNbRandom();
-        System.out.println(nbAdeviner);
-        System.out.println(nbVisible);
+        System.out.println("Nb a deviner: " + nbAdeviner);
+        System.out.println("Nb visible: " +nbVisible);
     }
 
     public void perdreUnCoeur(){
         this.nbCoeurs--;
+        System.out.println("Nb coeurs: " + nbCoeurs);
         if (this.nbCoeurs == 0) {
             this.partieEnCours = false;
         }

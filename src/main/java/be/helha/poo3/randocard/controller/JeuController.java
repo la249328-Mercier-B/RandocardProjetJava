@@ -11,18 +11,18 @@ public class JeuController {
     private final Partie partie;
 
     public JeuController() {
-        this.partie =new Partie();
+        this.partie = new Partie();
     }
 
     @GetMapping("/verifierNombre/{grandPetit}")
-    public boolean verifierNombre(@PathVariable("grandPetit") boolean bool){
-
-        boolean verif= partie.verif(bool);
+    public boolean verifierNombre(@PathVariable("grandPetit") boolean bool) {
+        boolean verif = partie.verif(bool);
+        if (!verif) {
+            this.partie.perdreUnCoeur();
+        }
+        if (this.partie.isPartieEnCours()) {
+            partie.passerProchaineCarte();
+        }
         return verif;
-    }
-
-    @GetMapping("/changerNombres")
-    public void changerNombres(){
-        partie.passerProchaineCarte();
     }
 }
