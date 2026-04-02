@@ -25,6 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig  {
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,7 +39,7 @@ public class SecurityConfig  {
                 .sessionManagement(session -> session
                 .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .addFilterBefore(
-                       new JwtAuthenticationFilter(jwtUtils),
+                       new JwtAuthenticationFilter(jwtUtils, customUserDetailsService),
                         UsernamePasswordAuthenticationFilter.class)
                 ;
 

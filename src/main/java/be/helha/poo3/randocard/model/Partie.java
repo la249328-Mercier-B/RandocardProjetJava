@@ -13,6 +13,7 @@ public class Partie {
     private int nbVisible;
     private int nbCoeurs = 3;
     private boolean partieEnCours = true;
+    private int scorePartie = 0;
 
     public Partie() {
         this.nbAdeviner = genererNbRandom();
