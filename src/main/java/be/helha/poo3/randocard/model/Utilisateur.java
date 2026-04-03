@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "utilisateur")
-public class Utilisateur implements UserDetails {
+public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,14 +28,4 @@ public class Utilisateur implements UserDetails {
     private int pieces;
     @Builder.Default
     private String role = "USER";
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
-    }
-
-    @Override
-    public String getUsername() {
-        return pseudo;
-    }
 }

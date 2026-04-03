@@ -25,8 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig  {
     @Autowired
     private JwtUtils jwtUtils;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,11 +35,11 @@ public class SecurityConfig  {
                         .anyRequest().authenticated() // Toute autre requête nécessite une authentification
                 )
                 .sessionManagement(session -> session
-                .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .addFilterBefore(
-                       new JwtAuthenticationFilter(jwtUtils, customUserDetailsService),
+                        new JwtAuthenticationFilter(jwtUtils),
                         UsernamePasswordAuthenticationFilter.class)
-                ;
+        ;
 
 
 

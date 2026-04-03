@@ -36,8 +36,9 @@ public class Inscription {
             return ResponseEntity.badRequest().body(result.getAllErrors().get(0).getDefaultMessage());
         }
 
-        if (userDAO.findByPseudo(userIn.pseudo()) != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erreur : Le pseudo " + userIn.pseudo() + " est déjà utilisé");
+        if (userDAO.findByPseudo(userIn.pseudo()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Erreur : Le pseudo " + userIn.pseudo() + " est déjà utilisé");
         }
 
         Utilisateur utilisateur = userMapper.toEntity(userIn);
