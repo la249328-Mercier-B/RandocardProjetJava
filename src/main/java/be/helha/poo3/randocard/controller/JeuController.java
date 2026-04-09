@@ -22,33 +22,35 @@ public class JeuController {
     @GetMapping("/verifierNombre/{grandPetit}")
     public boolean verifierNombre(@PathVariable("grandPetit") boolean bool,
                                   Authentication authentication) {
-
-        String pseudo = authentication.getName();
-
-        Utilisateur utilisateurConnecte = userDAO.findByPseudo(pseudo).orElseThrow();
-
-        boolean verif = partie.verif(bool);
-
-        if (!verif) {
-            partie.perdreUnCoeur();
-            System.out.println("Mauvaise réponse !");
-        } else {
-            partie.setScorePartie(partie.getScorePartie() + 1);
-            System.out.println("Bonne réponse ! Votre score passe à: " + partie.getScorePartie());
-        }
-
         if (partie.isPartieEnCours()) {
-            partie.passerProchaineCarte();
-        } else {
-            if (partie.getScorePartie() > utilisateurConnecte.getScore()) {
-                utilisateurConnecte.setScore(partie.getScorePartie());
-            }
-            utilisateurConnecte.setPieces(
-                    utilisateurConnecte.getPieces() + partie.getScorePartie()
-            );
-            userDAO.save(utilisateurConnecte);
-        }
+            String pseudo = authentication.getName();
 
-        return verif;
+            Utilisateur utilisateurConnecte = userDAO.findByPseudo(pseudo).orElseThrow();
+
+            boolean verif = partie.verif(bool);
+
+            if (!verif) {
+                partie.perdreUnCoeur();
+                System.out.println("Mauvaise réponse !");
+            } else {
+                partie.setScorePartie(partie.getScorePartie() + 1);
+                System.out.println("Bonne réponse ! Votre score passe à: " + partie.getScorePartie());
+            }
+
+            if (partie.isPartieEnCours()) {
+                partie.passerProchaineCarte();
+            } else {
+                if (partie.getScorePartie() > utilisateurConnecte.getScore()) {
+                    utilisateurConnecte.setScore(partie.getScorePartie());
+                }
+                utilisateurConnecte.setPieces(
+                        utilisateurConnecte.getPieces() + partie.getScorePartie()
+                );
+                userDAO.save(utilisateurConnecte);
+            }
+
+            return verif;
+        }
+        return false;
     }
 }
