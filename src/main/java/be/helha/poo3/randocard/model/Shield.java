@@ -1,0 +1,11 @@
+package be.helha.poo3.randocard.model;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+public class Shield extends Item {
+    public Shield() {
+        super("Shield", "Protège pendant 3 manches", 10);
+    }
+}
