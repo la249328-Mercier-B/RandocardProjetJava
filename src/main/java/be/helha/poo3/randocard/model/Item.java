@@ -15,6 +15,5 @@ public class Item {
     private String nom;
     private String description;
     private int cout;
-    private int stock;
 
 }
