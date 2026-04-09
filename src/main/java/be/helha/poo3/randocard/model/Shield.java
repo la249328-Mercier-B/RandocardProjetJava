@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class Shield extends Item {
     public Shield() {
-        super("Shield", "Protège pendant 3 manches", 10);
+        super();
     }
 }

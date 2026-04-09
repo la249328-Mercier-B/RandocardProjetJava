@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ReverseUno extends Item {
     public ReverseUno() {
-        super("ReverseUno", "Change la carte visible", 2);
+        super();
     }
 }

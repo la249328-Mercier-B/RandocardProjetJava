@@ -1,6 +1,8 @@
 package be.helha.poo3.randocard.controller;
 
 import be.helha.poo3.randocard.dao.UserDAO;
+import be.helha.poo3.randocard.factory.ItemRepository;
+import be.helha.poo3.randocard.model.Item;
 import be.helha.poo3.randocard.model.Partie;
 import be.helha.poo3.randocard.model.Utilisateur;
 import org.springframework.security.core.Authentication;
@@ -8,15 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class JeuController {
 
     private final Partie partie;
     private final UserDAO userDAO;
+    private final ItemRepository itemRepository;
 
-    public JeuController(UserDAO userDAO) {
+    public JeuController(UserDAO userDAO, ItemRepository itemRepository) {
         this.partie = new Partie();
         this.userDAO = userDAO;
+        this.itemRepository = itemRepository;
     }
 
     @GetMapping("/verifierNombre/{grandPetit}")
@@ -53,5 +59,10 @@ public class JeuController {
             return verif;
         }
         return false;
+    }
+
+    @GetMapping("/items")
+    public List<Item> getItems() throws Exception {
+        return itemRepository.findAll();
     }
 }
