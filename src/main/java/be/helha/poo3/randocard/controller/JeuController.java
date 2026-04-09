@@ -37,6 +37,7 @@ public class JeuController {
                 System.out.println("Bonne réponse ! Votre score passe à: " + partie.getScorePartie());
             }
 
+
             if (partie.isPartieEnCours()) {
                 partie.passerProchaineCarte();
             } else {
