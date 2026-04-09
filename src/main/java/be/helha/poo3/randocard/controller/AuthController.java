@@ -1,6 +1,7 @@
 package be.helha.poo3.randocard.controller;
 
 
+import be.helha.poo3.randocard.connexion.ConnexionMongoDb;
 import be.helha.poo3.randocard.dto.AuthResponse;
 import be.helha.poo3.randocard.dto.LoginRequest;
 import be.helha.poo3.randocard.security.JwtUtils;
@@ -44,6 +45,9 @@ public class AuthController {
 
             // Génération du token JWT
             String jwtToken = jwtUtils.generateToken(authentication);
+
+            ConnexionMongoDb.getDatabase();
+
             return ResponseEntity.ok(new AuthResponse(jwtToken, "Authentification réussie !"));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
