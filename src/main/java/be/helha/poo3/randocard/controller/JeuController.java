@@ -1,6 +1,7 @@
 package be.helha.poo3.randocard.controller;
 
 import be.helha.poo3.randocard.dao.UserDAO;
+import be.helha.poo3.randocard.dao.UtilisateurItemDAO;
 import be.helha.poo3.randocard.factory.ItemRepository;
 import be.helha.poo3.randocard.model.Item;
 import be.helha.poo3.randocard.model.Partie;
@@ -17,9 +18,11 @@ public class JeuController {
 
     private final Partie partie;
     private final UserDAO userDAO;
+    private final UtilisateurItemDAO utilisateurItemDAO;
     private final ItemRepository itemRepository;
 
-    public JeuController(UserDAO userDAO, ItemRepository itemRepository) {
+    public JeuController(UserDAO userDAO, UtilisateurItemDAO utilisateurItemDAO, ItemRepository itemRepository) {
+        this.utilisateurItemDAO = utilisateurItemDAO;
         this.partie = new Partie();
         this.userDAO = userDAO;
         this.itemRepository = itemRepository;

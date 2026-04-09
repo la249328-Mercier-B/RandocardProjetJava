@@ -1,7 +1,6 @@
 package be.helha.poo3.randocard.factory;
 
 import be.helha.poo3.randocard.connexion.ConnexionMongoDb;
-import be.helha.poo3.randocard.factory.ItemFactory;
 import be.helha.poo3.randocard.model.Item;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
