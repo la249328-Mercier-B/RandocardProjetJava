@@ -32,6 +32,12 @@ public class JeuController {
         this.itemRepository = itemRepository;
     }
 
+    @GetMapping("/lancerPartie")
+    public void  lancerPartie() {
+        this.partie.lancerPartie();
+        System.out.println("Partie lancer");
+    }
+
     @GetMapping("/verifierNombre/{grandPetit}")
     public boolean verifierNombre(@PathVariable("grandPetit") boolean bool,
                                   Authentication authentication) {

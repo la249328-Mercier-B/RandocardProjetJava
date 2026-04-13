@@ -12,15 +12,21 @@ import java.util.Random;
 public class Partie {
     private int nbAdeviner;
     private int nbVisible;
-    private int nbCoeurs = 3;
-    private boolean partieEnCours = true;
-    private int scorePartie = 0;
+    private int nbCoeurs;
+    private boolean partieEnCours;
+    private int scorePartie;
 
-    public Partie() {
+    public Partie() {}
+
+    public void lancerPartie() {
         this.nbAdeviner = genererNbRandom();
         do {
             this.nbVisible = genererNbRandom();
         } while (this.nbVisible == nbAdeviner);
+
+        this.nbCoeurs = 3;
+        this.scorePartie = 0;
+        this.partieEnCours = true;
     }
 
     public int genererNbRandom() {
