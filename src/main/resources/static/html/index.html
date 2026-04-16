@@ -5,33 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil Randocard</title>
     <link rel="stylesheet" href="../css/style.css">
-    
+    <script src="../js/appelRequete.js"></script>
 </head>
 <body>
-    <center>
+<center>
     <h1 class="titre">Randocard</h1>
 
     <div class="ligne-colonne">
-    <form action="">
-        <label for="">Pseudo: </label>
-        <input type="text">
+        <label for="pseudo">Pseudo: </label>
+        <input type="text" id="pseudo">
 
-        <br>
-        <br>
+        <br><br>
 
-        <label for="">Mot de passe: </label>
-        <input type="password">
+        <label for="motdepasse">Mot de passe: </label>
+        <input type="password" id="motdepasse">
 
-        <br>
-        <br>
+        <br><br>
 
-        <input type="submit" value="Se connecter">
-    </form>
-    <a href="inscription.html">S'inscrire</a>
+        <button onclick="seConnecter()">Se connecter</button>
+
+        <p id="message-erreur" style="color: red; display: none;"></p>
     </div>
-    
 
+    <a href="inscription.html">S'inscrire</a>
+    <br>
     <a href="menuPrincipal.html">test menu</a>
-    </center>
+</center>
+
 </body>
 </html>
+

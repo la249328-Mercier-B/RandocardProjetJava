@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription Randcard</title>
+    <title>Inscription Randocard</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/appelRequete.js"></script>
 </head>
 <body>
-    <center>
+<center>
     <h1 class="titre">Inscription</h1>
 
-    <div class="ligne">
-    <form action="">
-        <label for="">Pseudo: </label>
-        <input type="text">
+    <div class="ligne-colonne">
+        <label for="pseudo">Pseudo: </label>
+        <input type="text" id="pseudo">
 
-        <br>
-        <br>
+        <br><br>
 
-        <label for="">Mot de passe: </label>
-        <input type="password">
+        <label for="motdepasse">Mot de passe: </label>
+        <input type="password" id="motdepasse">
 
-        <br>
-        <br>
+        <br><br>
 
-        <label for="">Confirmer le mot de passe: </label>
-        <input type="password">
+        <label for="confirmation">Confirmer le mot de passe: </label>
+        <input type="password" id="confirmation">
 
-        <br>
-        <br>
+        <br><br>
 
-        <input type="submit" value="S'inscrire">
-    </form>
+        <button onclick="sInscrire()">S'inscrire</button>
 
+        <p id="message-erreur" style="color: red; display: none;"></p>
+        <p id="message-succes" style="color: green; display: none;"></p>
     </div>
-    </center>
 
     <a href="index.html" class="retour">Retour</a>
+</center>
 </body>
 </html>

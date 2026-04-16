@@ -2,12 +2,14 @@ package be.helha.poo3.randocard.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class HelloController {
     // Ce point de terminaison est accessible uniquement si l'utilisateur a le rôle "USER"
