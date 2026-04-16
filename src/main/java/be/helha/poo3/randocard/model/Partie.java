@@ -15,6 +15,8 @@ public class Partie {
     private int nbCoeurs;
     private boolean partieEnCours;
     private int scorePartie;
+    private boolean bouclier;
+    private int compterBouclier;
 
     public Partie() {}
 
@@ -27,6 +29,9 @@ public class Partie {
         this.nbCoeurs = 3;
         this.scorePartie = 0;
         this.partieEnCours = true;
+        this.bouclier = false;
+        System.out.println("Nb a deviner: " + nbAdeviner);
+        System.out.println("Nb visible: " + nbVisible);
     }
 
     public int genererNbRandom() {
@@ -48,6 +53,13 @@ public class Partie {
     }
 
     public void passerProchaineCarte() {
+
+        if (compterBouclier > 0){
+            compterBouclier--;
+        } else if (compterBouclier == 0) {
+            bouclier = false;
+        }
+
         this.nbVisible = nbAdeviner;
         do {
             this.nbAdeviner = genererNbRandom();
@@ -57,10 +69,28 @@ public class Partie {
     }
 
     public void perdreUnCoeur() {
-        this.nbCoeurs--;
-        System.out.println("Nb coeurs: " + nbCoeurs);
+        if (!bouclier){
+            this.nbCoeurs--;
+            System.out.println("Nb coeurs: " + nbCoeurs);
+        } else{
+            System.out.println("Bouclier actif ! Vous n'avez pas perdu de coeur.");
+        }
         if (this.nbCoeurs == 0) {
             this.partieEnCours = false;
         }
+    }
+
+    public void ajouterCoeur() {
+        this.nbCoeurs++;
+        System.out.println("Coeur ajouté ! Nombre de coeurs: " + nbCoeurs);
+    }
+
+    public void activerBouclier(){
+        this.compterBouclier = 3;
+        this.bouclier = true;
+    }
+
+    public void changerCarteVisible(){
+        this.nbVisible = genererNbRandom();
     }
 }

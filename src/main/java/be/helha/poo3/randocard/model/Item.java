@@ -18,4 +18,6 @@ public class Item {
         this.description = description;
         this.cout = cout;
     }
+
+    public void utiliser(Partie partie){}
 }

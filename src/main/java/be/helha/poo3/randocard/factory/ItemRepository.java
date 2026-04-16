@@ -20,7 +20,7 @@ public class ItemRepository {
     public List<Item> findAll() throws Exception {
         List<Item> items = new ArrayList<>();
         for (Document doc : collection.find()) {
-            Item item = ItemFactory.creerItem(doc.getString("nom")); // Item vide
+            Item item = ItemFactory.recupererItem(doc.getString("nom")); // Item vide
             item.setNom(doc.getString("nom"));
             item.setDescription(doc.getString("description"));
             item.setCout(doc.getInteger("cout"));
@@ -34,7 +34,7 @@ public class ItemRepository {
         if (doc == null) {
             return Optional.empty();
         }
-        Item item = ItemFactory.creerItem(doc.getString("nom"));
+        Item item = ItemFactory.recupererItem(doc.getString("nom"));
         item.setDescription(doc.getString("description"));
         item.setCout(doc.getInteger("cout"));
         return Optional.of(item);

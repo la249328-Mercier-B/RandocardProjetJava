@@ -4,7 +4,10 @@ import lombok.Data;
 
 @Data
 public class ReverseUno extends Item {
-    public ReverseUno() {
-        super();
+    public ReverseUno() {super();}
+
+    @Override
+    public void utiliser(Partie partie) {
+        partie.changerCarteVisible();
     }
 }

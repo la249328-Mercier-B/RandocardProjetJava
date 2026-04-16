@@ -5,7 +5,7 @@ import be.helha.poo3.randocard.model.Item;
 
 public class ItemFactory {
 
-    public static Item creerItem(String shortName) throws Exception {
+    public static Item recupererItem(String shortName) throws Exception {
         String base = RandocardApplication.class.getPackageName();
         String fqcn = base + ".model." + shortName;
 

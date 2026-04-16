@@ -2,6 +2,7 @@ package be.helha.poo3.randocard.controller;
 
 import be.helha.poo3.randocard.dao.UserDAO;
 import be.helha.poo3.randocard.dao.UtilisateurItemDAO;
+import be.helha.poo3.randocard.factory.ItemFactory;
 import be.helha.poo3.randocard.factory.ItemRepository;
 import be.helha.poo3.randocard.model.Item;
 import be.helha.poo3.randocard.model.Partie;
@@ -35,7 +36,7 @@ public class JeuController {
     @GetMapping("/lancerPartie")
     public void  lancerPartie() {
         this.partie.lancerPartie();
-        System.out.println("Partie lancer");
+        System.out.println("Partie lancée");
     }
 
     @GetMapping("/verifierNombre/{grandPetit}")
@@ -86,7 +87,7 @@ public class JeuController {
         return utilisateurItemDAO.findByUtilisateurId(utilisateur.getId());
     }
 
-    @PostMapping("/acheter/{nomItem}")
+    @PostMapping("/acheterItem/{nomItem}")
     public ResponseEntity<String> acheterItem(@PathVariable String nomItem,
                               Authentication authentication) throws Exception {
 
@@ -121,5 +122,31 @@ public class JeuController {
         }
 
         return ResponseEntity.ok("Item " + nomItem + " acheté !");
+    }
+
+    @PostMapping("utiliserItem/{nomItem}")
+    public ResponseEntity<String> utiliserItem(@PathVariable String nomItem,
+                                               Authentication authentication) throws Exception {
+
+        String pseudo = authentication.getName();
+        Utilisateur utilisateur = userDAO.findByPseudo(pseudo).orElseThrow();
+
+        // Vérifier que l'utilisateur possède cet item
+        Optional<UtilisateurItem> existant = utilisateurItemDAO
+                .findByUtilisateurIdAndNomItem(utilisateur.getId(), nomItem);
+
+        if (existant.isEmpty()) {
+            return ResponseEntity.badRequest().body("Tu ne possèdes pas cet item !");
+        }
+
+        // Utiliser l'item → la factory crée le bon objet et appelle utiliser()
+        ItemFactory.recupererItem(nomItem).utiliser(partie);
+
+        // Décrémenter la quantité
+        UtilisateurItem utilisateurItem = existant.get();
+        utilisateurItem.setQuantite(utilisateurItem.getQuantite() - 1);
+        utilisateurItemDAO.save(utilisateurItem);
+
+        return ResponseEntity.ok("Item " + nomItem + " utilisé !");
     }
 }

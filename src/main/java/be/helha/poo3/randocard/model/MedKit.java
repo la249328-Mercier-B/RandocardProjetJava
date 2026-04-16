@@ -4,7 +4,10 @@ import lombok.Data;
 
 @Data
 public class MedKit extends Item {
-    public MedKit() {
-        super();
+    public MedKit() { super(); }
+
+    @Override
+    public void utiliser(Partie partie) {
+        partie.ajouterCoeur();
     }
 }
