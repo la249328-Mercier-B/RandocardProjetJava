@@ -1,0 +1,165 @@
+html {
+    font-size: 18px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f0f4f8;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    letter-spacing: 2px;
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+
+/* Info joueur */
+.player-info {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #2c3e50;
+    line-height: 1.8;
+}
+
+.player-info span {
+    font-weight: bold;
+}
+
+/* Formulaire */
+.ligne-colonne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    height: calc(100vh - 60px);
+}
+
+form {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 220px;
+    font-size: 1rem;
+}
+
+input[type="submit"], button {
+    padding: 10px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #3d5166;
+}
+
+/* Liens */
+a {
+    text-decoration: none;
+    color: #2c3e50;
+    border: 1px solid #2c3e50;
+    padding: 12px 24px;  /* ← plus de padding */
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 1.3rem;   /* ← texte plus grand */
+}
+
+a:hover {
+    background-color: #2c3e50;
+    color: white;
+}
+
+/* Tableau */
+table {
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+tr:first-child td {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Menu principal */
+.ligne {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 250px;
+    height: calc(100vh - 60px);
+}
+
+.lignePartie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 700px;
+}
+
+.page-partie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 15px;
+}
+
+.boutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Lien retour */
+.retour {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
