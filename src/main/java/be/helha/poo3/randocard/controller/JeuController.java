@@ -153,4 +153,20 @@ public class JeuController {
         String pseudo = authentication.getName();
         return ResponseEntity.ok(pseudo);
     }
+
+    @GetMapping("/recupPieceUtilisateur")
+    public  ResponseEntity<Integer> recupPieceUtilisateur(Authentication authentication) throws Exception {
+        String pseudo = authentication.getName();
+        Utilisateur utilisateur = userDAO.findByPseudo(pseudo).orElseThrow();
+
+        return ResponseEntity.ok(utilisateur.getPieces());
+    }
+
+    @GetMapping("/recupScoreUtilisateur")
+    public  ResponseEntity<Integer> recupScoreUtilisateur(Authentication authentication) throws Exception {
+        String pseudo = authentication.getName();
+        Utilisateur utilisateur = userDAO.findByPseudo(pseudo).orElseThrow();
+
+        return ResponseEntity.ok(utilisateur.getScore());
+    }
 }

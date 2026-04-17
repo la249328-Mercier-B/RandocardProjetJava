@@ -11,7 +11,9 @@
 <div class="player-info">
     Pseudo : <span id="pseudo-affiche">...</span>
     <br>
-    Score : 0
+    Piéces : <span id="piece-affiche">...</span>
+    <br>
+    Meilleur score : <span id="score-affiche">...</span>
 </div>
 
 <h1>Randocard</h1>
@@ -51,10 +53,76 @@
 
             if (response.ok) {
                 const pseudo = await response.text();
-                console.log('Pseudo reçu :', pseudo);  // ← ajoute ça
+                console.log('Pseudo reçu :', pseudo);
                 document.getElementById('pseudo-affiche').textContent = pseudo;
             } else {
-                console.log('Erreur HTTP :', response.status);  // ← et ça
+                console.log('Erreur HTTP :', response.status);
+                window.location.href = 'index.html';
+            }
+
+
+        } catch (erreur) {
+            console.error('Erreur réseau :', erreur);
+        }
+    }
+
+    async function chargerPieceUtilisateur() {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/recupPieceUtilisateur', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            console.log('Token :', localStorage.getItem('token'));
+
+            if (response.ok) {
+                const piece = await response.text();
+                console.log('Piece reçu :', piece);
+                document.getElementById('piece-affiche').textContent = piece;
+            } else {
+                console.log('Erreur HTTP :', response.status);
+                window.location.href = 'index.html';
+            }
+
+
+        } catch (erreur) {
+            console.error('Erreur réseau :', erreur);
+        }
+    }
+
+    async function chargerScoreUtilisateur() {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/recupScoreUtilisateur', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            console.log('Token :', localStorage.getItem('token'));
+
+            if (response.ok) {
+                const score = await response.text();
+                console.log('Score reçu :', score);
+                document.getElementById('score-affiche').textContent = score;
+            } else {
+                console.log('Erreur HTTP :', response.status);
                 window.location.href = 'index.html';
             }
 
@@ -65,6 +133,8 @@
     }
 
     chargerNomUtilisateur();
+    chargerPieceUtilisateur();
+    chargerScoreUtilisateur();
 </script>
     
 </body>
