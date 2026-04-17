@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    
-    <div class="player-info">
-    Pseudo : Joueur1
+
+<div class="player-info">
+    Pseudo : <span id="pseudo-affiche">...</span>
     <br>
     Score : 0
 </div>
@@ -29,6 +29,43 @@
 </div>
 
 <a href="index.html" class="retour">Retour</a>
+
+<script>
+    async function chargerNomUtilisateur() {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/recupNomUtilisateur', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            console.log('Token :', localStorage.getItem('token'));
+
+            if (response.ok) {
+                const pseudo = await response.text();
+                console.log('Pseudo reçu :', pseudo);  // ← ajoute ça
+                document.getElementById('pseudo-affiche').textContent = pseudo;
+            } else {
+                console.log('Erreur HTTP :', response.status);  // ← et ça
+                window.location.href = 'index.html';
+            }
+
+
+        } catch (erreur) {
+            console.error('Erreur réseau :', erreur);
+        }
+    }
+
+    chargerNomUtilisateur();
+</script>
     
 </body>
 </html>

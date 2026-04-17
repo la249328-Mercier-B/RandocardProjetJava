@@ -147,4 +147,10 @@ public class JeuController {
 
         return ResponseEntity.ok("Item " + nomItem + " utilisé !");
     }
+
+    @GetMapping("/recupNomUtilisateur")
+    public ResponseEntity<String> recupNomUtilisateur(Authentication authentication) throws Exception {
+        String pseudo = authentication.getName();
+        return ResponseEntity.ok(pseudo);
+    }
 }

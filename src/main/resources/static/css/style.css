@@ -44,8 +44,7 @@ h1 {
     gap: 15px;
     height: calc(100vh - 60px);
 }
-
-form {
+ .font{
     background-color: white;
     padding: 30px 40px;
     border-radius: 10px;
