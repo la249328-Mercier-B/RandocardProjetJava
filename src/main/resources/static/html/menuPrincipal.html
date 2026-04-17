@@ -22,11 +22,12 @@
     <a href="partie.html">Jouer une partie</a>
 
     <table>
-        <tr><td colspan="2">Liste des meilleurs joueurs</td></tr>
+        <tr class="titre-tableau"><td colspan="2">Liste des 5 meilleurs joueurs</td></tr>
         <tr>
-            <td>Pseudo</td>
-            <td>Score</td>
+            <th>Pseudo</th>
+            <th>Score</th>
         </tr>
+        <tbody id="tableau-scores"></tbody>
     </table>
 </div>
 
@@ -132,9 +133,48 @@
         }
     }
 
+    async function charger5MeilleursScore() {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/recup5MeilleursScore', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            console.log('Token :', localStorage.getItem('token'));
+
+            if (response.ok) {
+                const utilisateurs = await response.json();
+                const tbody = document.getElementById('tableau-scores');
+
+                utilisateurs.forEach(u => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${u.pseudo}</td><td>${u.score}</td>`;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                console.log('Erreur HTTP :', response.status);
+                window.location.href = 'index.html';
+            }
+
+
+        } catch (erreur) {
+            console.error('Erreur réseau :', erreur);
+        }
+    }
+
     chargerNomUtilisateur();
     chargerPieceUtilisateur();
     chargerScoreUtilisateur();
+    charger5MeilleursScore();
 </script>
     
 </body>

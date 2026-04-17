@@ -2,8 +2,10 @@ package be.helha.poo3.randocard.controller;
 
 import be.helha.poo3.randocard.dao.UserDAO;
 import be.helha.poo3.randocard.dao.UtilisateurItemDAO;
+import be.helha.poo3.randocard.dto.UserOut;
 import be.helha.poo3.randocard.factory.ItemFactory;
 import be.helha.poo3.randocard.factory.ItemRepository;
+import be.helha.poo3.randocard.mapper.UserMapper;
 import be.helha.poo3.randocard.model.Item;
 import be.helha.poo3.randocard.model.Partie;
 import be.helha.poo3.randocard.model.Utilisateur;
@@ -11,6 +13,7 @@ import be.helha.poo3.randocard.model.UtilisateurItem;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +26,14 @@ public class JeuController {
     private final UserDAO userDAO;
     private final UtilisateurItemDAO utilisateurItemDAO;
     private final ItemRepository itemRepository;
+    private final UserMapper userMapper;
 
-    public JeuController(UserDAO userDAO, UtilisateurItemDAO utilisateurItemDAO, ItemRepository itemRepository) {
+    public JeuController(UserDAO userDAO, UtilisateurItemDAO utilisateurItemDAO, ItemRepository itemRepository,  UserMapper userMapper) {
         this.utilisateurItemDAO = utilisateurItemDAO;
         this.partie = new Partie();
         this.userDAO = userDAO;
         this.itemRepository = itemRepository;
+        this.userMapper= userMapper;
     }
 
     @GetMapping("/lancerPartie")
@@ -168,5 +173,13 @@ public class JeuController {
         Utilisateur utilisateur = userDAO.findByPseudo(pseudo).orElseThrow();
 
         return ResponseEntity.ok(utilisateur.getScore());
+    }
+
+    @GetMapping("/recup5MeilleursScore")
+    public ResponseEntity<List<UserOut>> getMeilleurs() {
+        List<Utilisateur> utilisateurs = userDAO.find5MeilleursScores();
+        List<UserOut> usersOut = userMapper.toDTO(utilisateurs);
+
+        return ResponseEntity.ok(usersOut);
     }
 }
