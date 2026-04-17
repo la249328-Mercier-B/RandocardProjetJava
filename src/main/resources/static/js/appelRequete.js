@@ -27,8 +27,12 @@ async function seConnecter() {
             // Sauvegarder le token JWT dans le localStorage
             localStorage.setItem('token', data.token);
 
-            // Rediriger vers le menu principal
-            window.location.href = 'menuPrincipal.html';
+            const audio = new Audio('../sounds/carteSound.mp3');
+            audio.play();
+
+            audio.onended = () => {
+                window.location.href = 'menuPrincipal.html';
+            };
         } else {
             const erreur = await response.text();
             messageErreur.textContent = erreur;
@@ -82,7 +86,12 @@ async function sInscrire() {
             messageSucces.textContent = "Inscription réussie ! Redirection...";
             messageSucces.style.display = 'block';
 
-            window.location.href = 'index.html';
+            const audio = new Audio('../sounds/carteSound.mp3');
+            audio.play();
+
+            audio.onended = () => {
+                window.location.href = 'index.html';
+            };
 
 
         } else if (response.status === 409) {
@@ -113,4 +122,6 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+
 
