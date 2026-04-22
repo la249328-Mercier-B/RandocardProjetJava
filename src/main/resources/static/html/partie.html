@@ -12,7 +12,7 @@
 <body>
 
 <div class="player-info">
-    Pseudo : credits
+    Score : <span id="score">0</span>
 </div>
 
 <div class="volume-control">
@@ -40,6 +40,51 @@
     volume.addEventListener('input', () => {
         musique.volume = volume.value;
     });
+
+    async function recupScore() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/recupScorePartie', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                const score = await response.json();
+                document.getElementById('score').textContent = score;
+            }
+
+        } catch (erreur) {
+            console.error('Erreur récupération score :', erreur);
+        }
+    }
+
+    async function lancerPartie() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/lancerPartie', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                console.log('Partie lancée !');
+                await recupScore(); // met à jour le score après le lancement
+            }
+
+        } catch (erreur) {
+            console.error('Erreur lancement partie :', erreur);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', lancerPartie);
+    recupScore()
 </script>
 </body>
 </html>

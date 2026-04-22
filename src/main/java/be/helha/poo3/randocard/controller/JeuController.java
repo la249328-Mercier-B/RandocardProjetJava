@@ -182,4 +182,11 @@ public class JeuController {
 
         return ResponseEntity.ok(usersOut);
     }
+
+    @GetMapping("/recupScorePartie")
+    public ResponseEntity<Integer> getScorePartie() {
+        int scorePartie = partie.getScorePartie();
+
+        return ResponseEntity.ok(scorePartie);
+    }
 }
