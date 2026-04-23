@@ -15,10 +15,7 @@
     Score : <span id="score">0</span>
 </div>
 
-<div class="coeurs">
-    <img src="../img/coeurVie.png">
-    <img src="../img/coeurVie.png">
-    <img src="../img/coeurVie.png">
+<div id="coeurs" class="coeurs">
 </div>
 
 <div class="volume-control">
@@ -41,6 +38,24 @@
 </div>
 <script>
 
+    async function afficherCoeurs() {
+        const nbCoeurs = await recupNbCoeurs();
+        const nbCoeursMax = await recupNbCoeursMax();
+
+        const divCoeurs = document.getElementById('coeurs');
+        divCoeurs.innerHTML = '';
+
+        for (let i = 0; i < nbCoeursMax; i++) {
+            const img = document.createElement('img');
+            img.src = i < nbCoeurs ? '../img/coeurVie.png' : '../img/coeurVide.png';
+            divCoeurs.appendChild(img);
+        }
+
+        if (nbCoeurs === 0) {
+            window.location.href = 'menuPrincipal.html';
+        }
+    }
+
     async function verifierNombre(choix) {
         const token = localStorage.getItem('token');
 
@@ -60,6 +75,7 @@
                     await recupScore();
                 } else {
                     console.log('Mauvaise réponse !');
+                    await afficherCoeurs();
                 }
 
                 await recupNbVisible();
@@ -112,6 +128,48 @@
         }
     }
 
+    async function recupNbCoeurs() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/recupNbCoeur', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                const nbCoeurs = await response.json();
+                return nbCoeurs;
+            }
+
+        } catch (erreur) {
+            console.error('Erreur récupération nombre coeurs :', erreur);
+        }
+    }
+
+    async function recupNbCoeursMax() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/recupNbCoeursMax', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                const nbCoeursMax = await response.json();
+                return nbCoeursMax;
+            }
+
+        } catch (erreur) {
+            console.error('Erreur récupération nombre coeurs maximum :', erreur);
+        }
+    }
+
     async function lancerPartie() {
         const token = localStorage.getItem('token');
 
@@ -127,6 +185,7 @@
                 console.log('Partie lancée !');
                 await recupScore();
                 await recupNbVisible();
+                await afficherCoeurs();
             }
 
         } catch (erreur) {

@@ -13,6 +13,7 @@ public class Partie {
     private int nbAdeviner;
     private int nbVisible;
     private int nbCoeurs;
+    private int nbCoeursMax;
     private boolean partieEnCours;
     private int scorePartie;
     private boolean bouclier;
@@ -27,6 +28,7 @@ public class Partie {
         } while (this.nbVisible == nbAdeviner);
 
         this.nbCoeurs = 3;
+        this.nbCoeursMax = 3;
         this.scorePartie = 0;
         this.partieEnCours = true;
         this.bouclier = false;
@@ -82,6 +84,9 @@ public class Partie {
 
     public void ajouterCoeur() {
         this.nbCoeurs++;
+        if (this.nbCoeurs >= this.nbCoeursMax) {
+            this.nbCoeursMax++;
+        }
         System.out.println("Coeur ajouté ! Nombre de coeurs: " + nbCoeurs);
     }
 

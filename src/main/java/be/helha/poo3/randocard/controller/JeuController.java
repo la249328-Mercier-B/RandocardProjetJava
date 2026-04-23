@@ -196,4 +196,18 @@ public class JeuController {
 
         return ResponseEntity.ok(nbVisible);
     }
+
+    @GetMapping("/recupNbCoeur")
+    public ResponseEntity<Integer> getNbCoeur() {
+        int nbCoeurs = partie.getNbCoeurs();
+
+        return ResponseEntity.ok(nbCoeurs);
+    }
+
+    @GetMapping("/recupNbCoeursMax")
+    public ResponseEntity<Integer> getNbCoeursMax() {
+        int nbCoeursMax = partie.getNbCoeursMax();
+
+        return ResponseEntity.ok(nbCoeursMax);
+    }
 }
