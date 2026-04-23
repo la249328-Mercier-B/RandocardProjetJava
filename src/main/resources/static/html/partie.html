@@ -35,17 +35,40 @@
     </div>
     <br><br>
     <div class="boutton">
-        <button>Plus grand</button>
-        <button>Plus petit</button>
+        <button id="grand">Plus grand</button>
+        <button id="petit">Plus petit</button>
     </div>
 </div>
 <script>
-    const musique = document.getElementById('musique');
-    const volume = document.getElementById('volume');
 
-    volume.addEventListener('input', () => {
-        musique.volume = volume.value;
-    });
+    async function verifierNombre(choix) {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/verifierNombre/' + choix, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                const bonneReponse = await response.json();
+
+                if (bonneReponse) {
+                    console.log('Bonne réponse !');
+                    await recupScore();
+                } else {
+                    console.log('Mauvaise réponse !');
+                }
+
+                await recupNbVisible();
+            }
+
+        } catch (erreur) {
+            console.error('Erreur vérification :', erreur);
+        }
+    }
 
     async function recupScore() {
         const token = localStorage.getItem('token');
@@ -102,7 +125,7 @@
 
             if (response.ok) {
                 console.log('Partie lancée !');
-                await recupScore(); // met à jour le score après le lancement
+                await recupScore();
                 await recupNbVisible();
             }
 
@@ -110,6 +133,24 @@
             console.error('Erreur lancement partie :', erreur);
         }
     }
+
+    const musique = document.getElementById('musique');
+    const volume = document.getElementById('volume');
+
+    volume.addEventListener('input', () => {
+        musique.volume = volume.value;
+    });
+
+    const grand = document.getElementById('grand');
+    const petit = document.getElementById('petit');
+
+    grand.addEventListener('click', function () {
+        verifierNombre(true);
+    })
+
+    petit.addEventListener('click', function () {
+        verifierNombre(false);
+    })
 
     document.addEventListener('DOMContentLoaded', lancerPartie);
 
