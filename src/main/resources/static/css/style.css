@@ -182,3 +182,17 @@ table, th, td {
     accent-color: #3d5166;
 }
 
+.coeurs {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+img{
+    width: 50px;
+    height: 50px;
+    mix-blend-mode: darken;
+}
+
