@@ -24,7 +24,7 @@
 
 <div class="page-partie">
     <div class="lignePartie">
-        <h1>nombre</h1>
+        <h1 id="nbVisible"></h1>
         <h1>carte retourner</h1>
     </div>
     <br><br>
@@ -62,6 +62,27 @@
         }
     }
 
+    async function recupNbVisible() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/recupNbVisible', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            if (response.ok) {
+                const nbVisible = await response.json();
+                document.getElementById('nbVisible').textContent = nbVisible;
+            }
+
+        } catch (erreur) {
+            console.error('Erreur récupération nombre visible :', erreur);
+        }
+    }
+
     async function lancerPartie() {
         const token = localStorage.getItem('token');
 
@@ -76,6 +97,7 @@
             if (response.ok) {
                 console.log('Partie lancée !');
                 await recupScore(); // met à jour le score après le lancement
+                await recupNbVisible();
             }
 
         } catch (erreur) {
@@ -84,7 +106,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', lancerPartie);
-    recupScore()
+
 </script>
 </body>
 </html>

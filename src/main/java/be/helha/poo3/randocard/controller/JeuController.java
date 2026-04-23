@@ -189,4 +189,11 @@ public class JeuController {
 
         return ResponseEntity.ok(scorePartie);
     }
+
+    @GetMapping("/recupNbVisible")
+    public ResponseEntity<Integer> getNbVisible() {
+        int nbVisible = partie.getNbVisible();
+
+        return ResponseEntity.ok(nbVisible);
+    }
 }
