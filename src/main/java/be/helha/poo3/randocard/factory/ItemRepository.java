@@ -24,6 +24,7 @@ public class ItemRepository {
             item.setNom(doc.getString("nom"));
             item.setDescription(doc.getString("description"));
             item.setCout(doc.getInteger("cout"));
+            item.setImageUrl(doc.getString("imageUrl"));
             items.add(item);
         }
         return items;
@@ -35,8 +36,10 @@ public class ItemRepository {
             return Optional.empty();
         }
         Item item = ItemFactory.recupererItem(doc.getString("nom"));
+        item.setNom(doc.getString("nom"));
         item.setDescription(doc.getString("description"));
         item.setCout(doc.getInteger("cout"));
+        item.setImageUrl(doc.getString("imageUrl"));
         return Optional.of(item);
     }
 }
