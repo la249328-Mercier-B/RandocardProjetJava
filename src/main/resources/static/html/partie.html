@@ -31,8 +31,11 @@
 
 <div class="page-partie">
     <div class="lignePartie">
-        <div id="nbVisible"> </div>
-        <img src="../img/carteRetournee.png" alt="carte retournée" class="carte-retournee">
+        <div id="nbVisible"></div>
+        <div class="pile" id="pile">
+            <img src="../img/carteRetournee.jpg" class="carte-retournee">
+            <img src="../img/carteRetournee.jpg" class="carte-retournee carte-dessus" id="carte-dessus">
+        </div>
     </div>
     <br><br>
     <div class="boutton">
@@ -108,13 +111,27 @@
     async function recupNbVisible() {
         try {
             const response = await fetch('http://localhost:8080/recupNbVisible', {
-                method: 'GET',
                 headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
                 const nbVisible = await response.json();
-                document.getElementById('nbVisible').innerHTML = '<img src="../img/carte-' + nbVisible + '.jpg" class="carte-visible">';
+                var carteDessus = document.getElementById('carte-dessus');
+                var divVisible = document.getElementById('nbVisible');
+
+                // Lance l'animation
+                carteDessus.classList.add('envol');
+
+                // Quand la carte a disparu, met la nouvelle
+                setTimeout(function() {
+                    divVisible.innerHTML = '<img src="../img/carte-' + nbVisible + '.jpg" class="carte-visible">';
+                    carteDessus.classList.remove('envol');
+                }, 400);
+
+                // Remet la carte en place (invisible) pour le prochain tour
+                setTimeout(function() {
+                    carteDessus.classList.remove('envol');
+                }, 700);
             }
 
         } catch (erreur) {
