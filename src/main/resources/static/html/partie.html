@@ -15,6 +15,10 @@
     Score : <span id="score">0</span>
 </div>
 
+<div id="items-partie" class="items-partie"></div>
+
+<div id="message-item"></div>
+
 <div id="coeurs" class="coeurs">
 </div>
 
@@ -38,6 +42,8 @@
 </div>
 <script>
 
+    var token = localStorage.getItem('token');
+
     async function afficherCoeurs() {
         const nbCoeurs = await recupNbCoeurs();
         const nbCoeursMax = await recupNbCoeursMax();
@@ -57,14 +63,10 @@
     }
 
     async function verifierNombre(choix) {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/verifierNombre/' + choix, {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
@@ -87,14 +89,10 @@
     }
 
     async function recupScore() {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/recupScorePartie', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
@@ -108,14 +106,10 @@
     }
 
     async function recupNbVisible() {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/recupNbVisible', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
@@ -129,19 +123,14 @@
     }
 
     async function recupNbCoeurs() {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/recupNbCoeur', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
-                const nbCoeurs = await response.json();
-                return nbCoeurs;
+                return await response.json();
             }
 
         } catch (erreur) {
@@ -150,19 +139,14 @@
     }
 
     async function recupNbCoeursMax() {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/recupNbCoeursMax', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
-                const nbCoeursMax = await response.json();
-                return nbCoeursMax;
+                return await response.json();
             }
 
         } catch (erreur) {
@@ -171,14 +155,10 @@
     }
 
     async function lancerPartie() {
-        const token = localStorage.getItem('token');
-
         try {
             const response = await fetch('http://localhost:8080/lancerPartie', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
+                headers: { 'Authorization': 'Bearer ' + token }
             });
 
             if (response.ok) {
@@ -190,6 +170,75 @@
 
         } catch (erreur) {
             console.error('Erreur lancement partie :', erreur);
+        }
+    }
+
+    // Charge les items possédés et affiche les boutons
+    async function chargerMesItems() {
+        try {
+            var response = await fetch('http://localhost:8080/mesItems', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            if (response.ok) {
+                var mesItems = await response.json();
+                var div = document.getElementById('items-partie');
+                div.innerHTML = '';
+
+                mesItems.forEach(function(monItem) {
+                    if (monItem.quantite > 0) {
+                        var btn = document.createElement('button');
+                        btn.className = 'btn-item';
+                        btn.id = 'btn-' + monItem.nomItem;
+                        btn.innerHTML = monItem.nomItem + '<span class="quantite">x' + monItem.quantite + '</span>';
+                        btn.onclick = function() {
+                            utiliserItem(monItem.nomItem);
+                        };
+                        div.appendChild(btn);
+                    }
+                });
+            }
+
+        } catch (erreur) {
+            console.error('Erreur chargement items :', erreur);
+        }
+    }
+
+    // Affiche un message temporaire
+    function afficherMessage(texte, estErreur) {
+        var msg = document.getElementById('message-item');
+        msg.textContent = texte;
+        msg.className = estErreur ? 'erreur' : '';
+        msg.style.display = 'block';
+        setTimeout(function() {
+            msg.style.display = 'none';
+        }, 2500);
+    }
+
+    // Utilise un item pendant la partie
+    async function utiliserItem(nomItem) {
+        try {
+            var response = await fetch('http://localhost:8080/utiliserItem/' + nomItem, {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            var texte = await response.text();
+
+            if (response.ok) {
+                var son = new Audio('../sounds/achatSound.mp3');
+                son.play();
+                afficherMessage(texte, false);
+                // Rafraîchit les boutons et les coeurs
+                await chargerMesItems();
+                await afficherCoeurs();
+                await recupNbVisible();
+            } else {
+                afficherMessage(texte, true);
+            }
+
+        } catch (erreur) {
+            console.error('Erreur utilisation item :', erreur);
         }
     }
 
@@ -211,7 +260,10 @@
         verifierNombre(false);
     })
 
-    document.addEventListener('DOMContentLoaded', lancerPartie);
+    document.addEventListener('DOMContentLoaded', async function() {
+        await lancerPartie();
+        await chargerMesItems();
+    });
 
 </script>
 </body>

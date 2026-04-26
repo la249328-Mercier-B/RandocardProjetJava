@@ -14,7 +14,7 @@
 <div class="player-info">
     Pseudo : <span id="pseudo-affiche">...</span>
     <br>
-    Piéces : <span id="piece-affiche">...</span>
+    Pièces : <span id="piece-affiche">...</span>
     <br>
     Meilleur score : <span id="score-affiche">...</span>
 </div>
@@ -24,7 +24,7 @@
 <div class="ligne">
     <a href="partie.html">Jouer une partie</a>
 
-    <a href="boutique.html">🛒 Boutique</a>
+    <a href="boutique.html">Boutique</a>
 
     <table>
         <tr class="titre-tableau"><td colspan="2">Liste des 5 meilleurs joueurs</td></tr>
@@ -92,7 +92,7 @@
 
             if (response.ok) {
                 const piece = await response.text();
-                console.log('Piece reçu :', piece);
+                console.log('Pièces reçues :', piece);
                 document.getElementById('piece-affiche').textContent = piece;
             } else {
                 console.log('Erreur HTTP :', response.status);
