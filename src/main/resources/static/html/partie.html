@@ -14,9 +14,11 @@
 <div class="player-info">
     Score : <span id="score">0</span>
 </div>
+
 <div id="items-partie" class="items-partie"></div>
 
 <div id="message-item"></div>
+
 <div id="coeurs" class="coeurs">
 </div>
 
@@ -29,8 +31,8 @@
 
 <div class="page-partie">
     <div class="lignePartie">
-        <h1 id="nbVisible"></h1>
-        <h1>carte retourner</h1>
+        <div id="nbVisible"> </div>
+        <img src="../img/carteRetournee.png" alt="carte retournée" class="carte-retournee">
     </div>
     <br><br>
     <div class="boutton">
@@ -112,7 +114,7 @@
 
             if (response.ok) {
                 const nbVisible = await response.json();
-                document.getElementById('nbVisible').textContent = nbVisible;
+                document.getElementById('nbVisible').innerHTML = '<img src="../img/carte-' + nbVisible + '.jpg" class="carte-visible">';
             }
 
         } catch (erreur) {
@@ -226,13 +228,13 @@
             if (response.ok) {
                 var son = new Audio('../sounds/achatSound.mp3');
                 son.play();
-                afficherMessage(texte, false);
-                // Rafraîchit les boutons et les coeurs
+                afficherMessage('✅ ' + texte, false);
+                // Rafraîchit les boutons et les coeurs (ex: MedKit ajoute un coeur)
                 await chargerMesItems();
                 await afficherCoeurs();
                 await recupNbVisible();
             } else {
-                afficherMessage(texte, true);
+                afficherMessage('❌ ' + texte, true);
             }
 
         } catch (erreur) {

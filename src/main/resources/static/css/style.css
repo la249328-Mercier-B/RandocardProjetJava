@@ -137,7 +137,7 @@ table, th, td {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 700px;
+    gap: 400px;
 }
 
 .page-partie {
@@ -329,4 +329,78 @@ img{
 
 #message-item.erreur {
     background-color: #e74c3c;
+}
+
+
+.items-partie {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+}
+
+.btn-item {
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-item:hover {
+    background-color: #d35400;
+}
+
+.btn-item:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.btn-item .quantite {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
+#message-item {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: none;
+    z-index: 999;
+}
+
+#message-item.erreur {
+    background-color: #e74c3c;
+}
+
+/* Carte retournée dans la partie */
+.carte-retournee {
+    width: 300px;
+    height: 420px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Carte visible dans la partie (image carte uno) */
+.carte-visible {
+    width: 300px;
+    height: 420px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
