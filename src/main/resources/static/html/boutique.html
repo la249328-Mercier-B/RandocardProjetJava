@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique - Randocard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+</style>
+</head>
+<body>
+
+<div class="player-info">
+    Pseudo : <span id="pseudo-affiche">...</span><br>
+    Pièces : <span id="piece-affiche">...</span>
+</div>
+
+<div id="message"></div>
+
+<div class="boutique-container">
+    <h2>Boutique</h2>
+    <div id="items-grid" class="items-grid">
+        <p>Chargement...</p>
+    </div>
+</div>
+
+<a href="menuPrincipal.html" class="retour">← Retour</a>
+
+<script>
+    var token = localStorage.getItem('token');
+
+    if (!token) {
+        window.location.href = 'index.html';
+    }
+
+    // Charge le pseudo de l'utilisateur
+    async function chargerPseudo() {
+        var response = await fetch('http://localhost:8080/recupNomUtilisateur', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (response.ok) {
+            var pseudo = await response.text();
+            document.getElementById('pseudo-affiche').textContent = pseudo;
+        }
+    }
+
+    // Charge le nombre de pièces
+    async function chargerPieces() {
+        var response = await fetch('http://localhost:8080/recupPieceUtilisateur', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (response.ok) {
+            var pieces = await response.text();
+            document.getElementById('piece-affiche').textContent = pieces;
+        }
+    }
+
+    // Charge et affiche tous les items de la boutique
+    async function chargerItems() {
+        var responseItems = await fetch('http://localhost:8080/items', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        var responseMesItems = await fetch('http://localhost:8080/mesItems', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        var items = await responseItems.json();
+        var mesItems = await responseMesItems.json();
+
+        var grid = document.getElementById('items-grid');
+        grid.innerHTML = '';
+
+        items.forEach(function(item) {
+
+            // Cherche si l'utilisateur possède déjà cet item
+            var quantite = 0;
+            mesItems.forEach(function(monItem) {
+                if (monItem.nomItem === item.nom) {
+                    quantite = monItem.quantite;
+                }
+            });
+
+            // Crée la carte de l'item
+            var card = document.createElement('div');
+            card.className = 'item-card';
+
+            card.innerHTML =
+                '<img src="' + item.imageUrl + '" alt="' + item.nom + '">' +
+                '<div class="item-nom">' + item.nom + '</div>' +
+                '<div class="item-description">' + item.description + '</div>' +
+                '<div class="item-cout"> ' + item.cout + ' pièces</div>' +
+                (quantite > 0 ? '<div class="item-quantite">Possédé : ' + quantite + '</div>' : '') +
+                '<button class="btn-acheter" onclick="acheter(\'' + item.nom + '\')">Acheter</button>';
+
+            grid.appendChild(card);
+        });
+    }
+
+    // Affiche un message temporaire en haut de la page
+    function afficherMessage(texte, estErreur) {
+        var msg = document.getElementById('message');
+        msg.textContent = texte;
+        if (estErreur) {
+            msg.className = 'erreur';
+        } else {
+            msg.className = '';
+        }
+        msg.style.display = 'block';
+        setTimeout(function() {
+            msg.style.display = 'none';
+        }, 3000);
+    }
+
+    // Achète un item
+    async function acheter(nomItem) {
+        var response = await fetch('http://localhost:8080/acheterItem/' + nomItem, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        var texte = await response.text();
+
+        if (response.ok) {
+            var son = new Audio('../sounds/achatSound.mp3');
+            son.play();
+            afficherMessage(texte, false);
+            chargerPieces();
+            chargerItems();
+        } else {
+            afficherMessage(texte, true);
+        }
+    }
+
+    chargerPseudo();
+    chargerPieces();
+    chargerItems();
+</script>
+
+</body>
+</html>
