@@ -11,7 +11,7 @@
 
 <body>
 
-<div class="player-info">
+<div class="player-info player-info-absolue">
     Score : <span id="score">0</span>
 </div>
 
@@ -121,6 +121,9 @@
 
                 // Lance l'animation
                 carteDessus.classList.add('envol');
+
+                var son = new Audio('../sounds/carteSound.mp3');
+                son.play();
 
                 // Quand la carte a disparu, met la nouvelle
                 setTimeout(function() {

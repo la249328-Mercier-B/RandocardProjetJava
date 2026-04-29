@@ -56,9 +56,10 @@ public class Partie {
 
     public void passerProchaineCarte() {
 
-        if (compterBouclier > 0){
+        if (compterBouclier > 0) {
             compterBouclier--;
-        } else if (compterBouclier == 0) {
+        }
+        if (compterBouclier == 0) {
             bouclier = false;
         }
 
