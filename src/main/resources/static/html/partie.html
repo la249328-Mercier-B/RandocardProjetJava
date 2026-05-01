@@ -43,7 +43,44 @@
         <button id="petit">Plus petit</button>
     </div>
 </div>
+
+<button class="btn-retour" id="btn-quitter">Retour</button>
+
+<div id="custom-popup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>Quitter la partie ?</h3>
+        <p>Attention, ta progression actuelle ne sera pas sauvegardée.</p>
+        <div class="popup-buttons">
+            <button id="confirm-quit" class="btn-confirm">Quitter</button>
+            <button id="cancel-quit" class="btn-cancel">Rester</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    const btnRetour = document.querySelector('.btn-retour');
+    const popup = document.getElementById('custom-popup');
+    const btnConfirm = document.getElementById('confirm-quit');
+    const btnCancel = document.getElementById('cancel-quit');
+
+    btnRetour.addEventListener('click', (e) => {
+        e.preventDefault();
+        popup.style.display = 'flex';
+    });
+
+    btnConfirm.addEventListener('click', () => {
+        window.location.href = 'menuPrincipal.html';
+    });
+
+    btnCancel.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
 
     var token = localStorage.getItem('token');
 
