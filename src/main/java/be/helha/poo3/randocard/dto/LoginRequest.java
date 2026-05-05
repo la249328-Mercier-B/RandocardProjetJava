@@ -4,6 +4,9 @@ public class LoginRequest {
     private String pseudo;
     private String password;
 
+    public LoginRequest(String pseudoExistant, String passwordCorrect) {
+    }
+
     public String getPseudo() {
         return pseudo;
     }
