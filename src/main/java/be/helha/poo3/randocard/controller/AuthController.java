@@ -3,7 +3,7 @@ package be.helha.poo3.randocard.controller;
 
 import be.helha.poo3.randocard.connexion.ConnexionMongoDb;
 import be.helha.poo3.randocard.dto.AuthResponse;
-import be.helha.poo3.randocard.dto.LoginRequest;
+import be.helha.poo3.randocard.dto.UserIn;
 import be.helha.poo3.randocard.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,12 +32,12 @@ public class AuthController {
     }
 
     @PostMapping("/public/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody UserIn userIn) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getPseudo(),
-                            loginRequest.getPassword()
+                            userIn.pseudo(),
+                            userIn.password()
                     )
             );
 
