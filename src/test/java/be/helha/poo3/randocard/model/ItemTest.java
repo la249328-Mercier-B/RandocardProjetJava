@@ -8,9 +8,25 @@ class ItemTest {
 
     private Partie partie;
 
+    @BeforeAll
+    static void demarrageSuiteDeTests() {
+        System.out.println("=== Début des tests de Item ===");
+    }
+
+    @AfterAll
+    static void finSuiteDeTests() {
+        System.out.println("=== Fin des tests de Item ===");
+    }
+
     @BeforeEach
-    void setup() {
+    void avantChaqueTest(TestInfo testInfo) {
+        System.out.println("-- Début du test : " + testInfo.getDisplayName());
         partie = new Partie();
+    }
+
+    @AfterEach
+    void apresChaqueTest(TestInfo testInfo) {
+        System.out.println("-- Fin du test : " + testInfo.getDisplayName());
     }
 
     @Test
