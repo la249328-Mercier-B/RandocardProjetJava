@@ -3,7 +3,7 @@ package be.helha.poo3.randocard.model;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Tests de la hiérarchie Item (Sans Mockito)")
+@DisplayName("Tests de la hiérarchie Item")
 class ItemTest {
 
     private Partie partie;
@@ -85,5 +85,50 @@ class ItemTest {
         assertEquals(coeursAvant, partie.getNbCoeurs());
         assertEquals(bouclierAvant, partie.isBouclier());
         assertEquals(nbVisibleAvant, partie.getNbVisible());
+    }
+
+    @Test
+    @DisplayName("Vérification complète de la structure Item et de son héritage")
+    void testStructureEtHeritageItem() {
+
+        Item item = new Item();
+        item.setId("65f2a1b3c9e4d82a10f5b123");
+        item.setNom("Objet Mystère");
+        item.setDescription("Une description générique.");
+        item.setCout(100);
+        item.setImageUrl("http://cdn.game/item.png");
+
+        assertEquals("65f2a1b3c9e4d82a10f5b123", item.getId());
+        assertEquals("Objet Mystère", item.getNom());
+        assertEquals(100, item.getCout());
+        assertEquals("http://cdn.game/item.png", item.getImageUrl());
+
+        MedKit medKit = new MedKit();
+        medKit.setId("mk_001");
+        medKit.setNom("Kit de soin");
+        medKit.setCout(50);
+        medKit.setImageUrl("medkit.png");
+
+        assertEquals("mk_001", medKit.getId());
+        assertEquals("Kit de soin", medKit.getNom());
+        assertEquals(50, medKit.getCout());
+
+        Shield shield = new Shield();
+        shield.setId("sh_002");
+        shield.setNom("Bouclier");
+        shield.setImageUrl("shield.png");
+
+        assertEquals("sh_002", shield.getId());
+        assertEquals("Bouclier", shield.getNom());
+        assertEquals("shield.png", shield.getImageUrl());
+
+        ReverseUno reverse = new ReverseUno();
+        reverse.setId("rev_003");
+        reverse.setNom("Reverse Card");
+        reverse.setDescription("Inverse la tendance");
+
+        assertEquals("rev_003", reverse.getId());
+        assertEquals("Reverse Card", reverse.getNom());
+        assertEquals("Inverse la tendance", reverse.getDescription());
     }
 }

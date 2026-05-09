@@ -45,7 +45,7 @@ class UtilisateurTest {
     }
 
     @Test
-    @DisplayName("Test de l'intégralité des Getters et Setters (Lombok)")
+    @DisplayName("Test de l'intégralité des Getters et Setters")
     void testCompletGettersSetters() {
         Utilisateur utilisateur = new Utilisateur();
 

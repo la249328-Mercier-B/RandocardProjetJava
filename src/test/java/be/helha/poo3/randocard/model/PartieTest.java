@@ -127,4 +127,25 @@ class PartieTest {
         assertEquals(0, partie.getCompterBouclier());
         assertFalse(partie.isBouclier());
     }
+
+    @Test
+    @DisplayName("Vérification complète de tous les champs, getter et setter")
+    void testGettersSettersUtilisateur() {
+
+        Utilisateur user = new Utilisateur();
+
+        user.setId(1L);
+        user.setPseudo("Gamer77");
+        user.setPassword("password123");
+        user.setScore(500);
+        user.setPieces(150);
+        user.setRole("ADMIN");
+
+        assertEquals(1L, user.getId());
+        assertEquals("Gamer77", user.getPseudo());
+        assertEquals("password123", user.getPassword());
+        assertEquals(500, user.getScore());
+        assertEquals(150, user.getPieces());
+        assertEquals("ADMIN", user.getRole());
+    }
 }
