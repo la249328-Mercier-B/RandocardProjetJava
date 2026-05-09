@@ -96,7 +96,16 @@ public class Partie {
         this.bouclier = true;
     }
 
-    public void changerCarteVisible(){
-        this.nbVisible = genererNbRandom();
+    public void changerCarteVisible() {
+
+        int ancienneValeur = this.nbVisible;
+        int nouvelleValeur;
+
+        do {
+            nouvelleValeur = genererNbRandom();
+        } while (nouvelleValeur == ancienneValeur || nouvelleValeur == nbAdeviner);
+
+        this.nbVisible = nouvelleValeur;
+        System.out.println("Carte visible modifiée");
     }
 }
