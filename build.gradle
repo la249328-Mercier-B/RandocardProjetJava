@@ -5,6 +5,8 @@ plugins {
     id 'war'
 }
 
+
+
 group = 'be.helha.poo3'
 version = '0.0.1-SNAPSHOT'
 description = 'Randocard'
@@ -46,11 +48,14 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-core'
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-el'
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-websocket'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind'
-
 }
 
 tasks.named('test') {
