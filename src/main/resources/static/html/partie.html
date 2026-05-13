@@ -289,7 +289,10 @@
                 // Rafraîchit les boutons et les coeurs (ex: MedKit ajoute un coeur)
                 await chargerMesItems();
                 await afficherCoeurs();
-                await recupNbVisible();
+                // Animation carte uniquement pour l'item qui change la carte visible (ReverseUno)
+                if (nomItem === 'ReverseUno') {
+                    await recupNbVisible();
+                }
             } else {
                 afficherMessage('❌ ' + texte, true);
             }
