@@ -51,7 +51,7 @@ class UserMapperTest {
 
     @Test
     @DisplayName("Devrait retourner null si la liste entrée est nulle")
-    void toDTO_ShouldMapList() {
+    void toDTONull() {
         List<Utilisateur> list = null;
         assertNull(mapper.toDTO(list));
     }
