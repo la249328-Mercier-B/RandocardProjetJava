@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.3'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'war'
 }
 
 group = 'be.helha.poo3'
@@ -45,9 +46,15 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+war{
+    archiveFileName = 'ROOT.war'
 }

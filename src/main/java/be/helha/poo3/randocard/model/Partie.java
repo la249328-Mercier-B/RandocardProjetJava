@@ -94,6 +94,7 @@ public class Partie {
     public void activerBouclier(){
         this.compterBouclier = 3;
         this.bouclier = true;
+        System.out.println("Bouclier activé !");
     }
 
     public void changerCarteVisible() {
@@ -106,6 +107,6 @@ public class Partie {
         } while (nouvelleValeur == ancienneValeur || nouvelleValeur == nbAdeviner);
 
         this.nbVisible = nouvelleValeur;
-        System.out.println("Carte visible modifiée");
+        System.out.println("Carte visible modifiée !");
     }
 }
