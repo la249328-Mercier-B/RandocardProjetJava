@@ -134,21 +134,26 @@ public class JeuController {
         String pseudo = authentication.getName();
         Utilisateur utilisateur = userDAO.findByPseudo(pseudo).orElseThrow();
 
-        // Vérifier que l'utilisateur possède cet item
         Optional<UtilisateurItem> existant = utilisateurItemDAO
                 .findByUtilisateurIdAndNomItem(utilisateur.getId(), nomItem);
 
-        if (existant.isEmpty()) {
+        if (existant.isEmpty() || existant.get().getQuantite() <= 0) {
             return ResponseEntity.badRequest().body("Tu ne possèdes pas cet item !");
         }
 
-        // Utiliser l'item → la factory crée le bon objet et appelle utiliser()
-        ItemFactory.recupererItem(nomItem).utiliser(partie);
+        Item itemStats = itemRepository.findByNom(nomItem)
+                .orElseThrow(() -> new Exception("Données de l'item introuvables dans le catalogue"));
 
-        // Décrémenter la quantité
+        itemStats.utiliser(partie);
+
         UtilisateurItem utilisateurItem = existant.get();
         utilisateurItem.setQuantite(utilisateurItem.getQuantite() - 1);
-        utilisateurItemDAO.save(utilisateurItem);
+
+        if (utilisateurItem.getQuantite() == 0) {
+            utilisateurItemDAO.delete(utilisateurItem); // Optionnel : supprimer si quantité 0
+        } else {
+            utilisateurItemDAO.save(utilisateurItem);
+        }
 
         return ResponseEntity.ok("Item " + nomItem + " utilisé !");
     }
