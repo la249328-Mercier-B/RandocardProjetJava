@@ -49,6 +49,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Connexion mongo db.
+ */
 @Component
 public class ConnexionMongoDb {
 
@@ -64,6 +67,9 @@ public class ConnexionMongoDb {
     @Value("${spring.mongodb.database}")
     private String dbName;
 
+    /**
+     * Init.
+     */
     @PostConstruct
     public void init() {
         if (mongoClient == null) {
@@ -72,10 +78,20 @@ public class ConnexionMongoDb {
         }
     }
 
+    /**
+     * Gets database.
+     *
+     * @return the database
+     */
     public static MongoDatabase getDatabase() {
         return database;
     }
 
+    /**
+     * Gets collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         return getDatabase().getCollection("Items");
     }

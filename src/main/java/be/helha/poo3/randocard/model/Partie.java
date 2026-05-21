@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.Random;
 
+/**
+ * The type Partie.
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,8 +22,14 @@ public class Partie {
     private boolean bouclier;
     private int compterBouclier;
 
+    /**
+     * Instantiates a new Partie.
+     */
     public Partie() {}
 
+    /**
+     * Lancer partie.
+     */
     public void lancerPartie() {
         this.nbAdeviner = genererNbRandom();
         do {
@@ -36,12 +45,23 @@ public class Partie {
         System.out.println("Nb visible: " + nbVisible);
     }
 
+    /**
+     * Generer nb random int.
+     *
+     * @return the int
+     */
     public int genererNbRandom() {
         Random rand = new Random();
         int nb = rand.nextInt(1, 11);
         return nb;
     }
 
+    /**
+     * Verif boolean.
+     *
+     * @param reponseEntree the reponse entree
+     * @return the boolean
+     */
     public boolean verif(boolean reponseEntree) {
         // Réponse entrée:
         // True = Bouton plus grand
@@ -54,6 +74,9 @@ public class Partie {
         return reponseEntree == (nbVisible < nbAdeviner);
     }
 
+    /**
+     * Passer prochaine carte.
+     */
     public void passerProchaineCarte() {
 
         if (compterBouclier > 0) {
@@ -71,6 +94,9 @@ public class Partie {
         System.out.println("Nb visible: " + nbVisible);
     }
 
+    /**
+     * Perdre un coeur.
+     */
     public void perdreUnCoeur() {
         if (!bouclier){
             this.nbCoeurs--;
@@ -83,6 +109,9 @@ public class Partie {
         }
     }
 
+    /**
+     * Ajouter coeur.
+     */
     public void ajouterCoeur() {
         this.nbCoeurs++;
         if (this.nbCoeurs >= this.nbCoeursMax) {
@@ -91,12 +120,18 @@ public class Partie {
         System.out.println("Coeur ajouté ! Nombre de coeurs: " + nbCoeurs);
     }
 
+    /**
+     * Activer bouclier.
+     */
     public void activerBouclier(){
         this.compterBouclier = 3;
         this.bouclier = true;
         System.out.println("Bouclier activé !");
     }
 
+    /**
+     * Changer carte visible.
+     */
     public void changerCarteVisible() {
 
         int ancienneValeur = this.nbVisible;

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * The type Item.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +19,14 @@ public class Item {
     private int cout;
     private String imageUrl;
 
+    /**
+     * Instantiates a new Item.
+     *
+     * @param nom         the nom
+     * @param description the description
+     * @param cout        the cout
+     * @param imageUrl    the image url
+     */
     public Item(String nom, String description, int cout, String imageUrl) {
         this.nom = nom;
         this.description = description;
@@ -23,5 +34,10 @@ public class Item {
         this.imageUrl = imageUrl;
     }
 
+    /**
+     * Utiliser.
+     *
+     * @param partie the partie
+     */
     public void utiliser(Partie partie){}
 }

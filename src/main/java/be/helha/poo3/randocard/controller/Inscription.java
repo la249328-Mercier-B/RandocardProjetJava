@@ -17,6 +17,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * The type Inscription.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class Inscription {
@@ -25,12 +28,26 @@ public class Inscription {
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Instantiates a new Inscription.
+     *
+     * @param userMapper      the user mapper
+     * @param userDAO         the user dao
+     * @param passwordEncoder the password encoder
+     */
     public Inscription(UserMapper userMapper, UserDAO userDAO, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Ajouter user response entity.
+     *
+     * @param userIn the user in
+     * @param result the result
+     * @return the response entity
+     */
     @PostMapping("/public/inscription")
     public ResponseEntity<?> AjouterUser(@Valid @RequestBody UserIn userIn, BindingResult result) {
 

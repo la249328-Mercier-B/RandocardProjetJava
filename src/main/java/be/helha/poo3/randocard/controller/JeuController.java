@@ -18,6 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Jeu controller.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class JeuController {
@@ -28,6 +31,14 @@ public class JeuController {
     private final ItemRepository itemRepository;
     private final UserMapper userMapper;
 
+    /**
+     * Instantiates a new Jeu controller.
+     *
+     * @param userDAO            the user dao
+     * @param utilisateurItemDAO the utilisateur item dao
+     * @param itemRepository     the item repository
+     * @param userMapper         the user mapper
+     */
     public JeuController(UserDAO userDAO, UtilisateurItemDAO utilisateurItemDAO, ItemRepository itemRepository,  UserMapper userMapper) {
         this.utilisateurItemDAO = utilisateurItemDAO;
         this.partie = new Partie();
@@ -36,12 +47,22 @@ public class JeuController {
         this.userMapper= userMapper;
     }
 
+    /**
+     * Lancer partie.
+     */
     @GetMapping("/lancerPartie")
     public void  lancerPartie() {
         this.partie.lancerPartie();
         System.out.println("Partie lancée");
     }
 
+    /**
+     * Verifier nombre boolean.
+     *
+     * @param bool           the bool
+     * @param authentication the authentication
+     * @return the boolean
+     */
     @GetMapping("/verifierNombre/{grandPetit}")
     public boolean verifierNombre(@PathVariable("grandPetit") boolean bool,
                                   Authentication authentication) {
@@ -78,11 +99,23 @@ public class JeuController {
         return false;
     }
 
+    /**
+     * Gets items.
+     *
+     * @return the items
+     * @throws Exception the exception
+     */
     @GetMapping("/items")
     public List<Item> getItems() throws Exception {
         return itemRepository.findAll();
     }
 
+    /**
+     * Gets mes items.
+     *
+     * @param authentication the authentication
+     * @return the mes items
+     */
     @GetMapping("/mesItems")
     public List<UtilisateurItem> getMesItems(Authentication authentication) {
         String pseudo = authentication.getName();
@@ -90,6 +123,14 @@ public class JeuController {
         return utilisateurItemDAO.findByUtilisateurId(utilisateur.getId());
     }
 
+    /**
+     * Acheter item response entity.
+     *
+     * @param nomItem        the nom item
+     * @param authentication the authentication
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @PostMapping("/acheterItem/{nomItem}")
     public ResponseEntity<String> acheterItem(@PathVariable String nomItem,
                               Authentication authentication) throws Exception {
@@ -127,6 +168,14 @@ public class JeuController {
         return ResponseEntity.ok("Item " + nomItem + " acheté !");
     }
 
+    /**
+     * Utiliser item response entity.
+     *
+     * @param nomItem        the nom item
+     * @param authentication the authentication
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @PostMapping("utiliserItem/{nomItem}")
     public ResponseEntity<String> utiliserItem(@PathVariable String nomItem,
                                                Authentication authentication) throws Exception {
@@ -158,12 +207,26 @@ public class JeuController {
         return ResponseEntity.ok("Item " + nomItem + " utilisé !");
     }
 
+    /**
+     * Recup nom utilisateur response entity.
+     *
+     * @param authentication the authentication
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @GetMapping("/recupNomUtilisateur")
     public ResponseEntity<String> recupNomUtilisateur(Authentication authentication) throws Exception {
         String pseudo = authentication.getName();
         return ResponseEntity.ok(pseudo);
     }
 
+    /**
+     * Recup piece utilisateur response entity.
+     *
+     * @param authentication the authentication
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @GetMapping("/recupPieceUtilisateur")
     public  ResponseEntity<Integer> recupPieceUtilisateur(Authentication authentication) throws Exception {
         String pseudo = authentication.getName();
@@ -172,6 +235,13 @@ public class JeuController {
         return ResponseEntity.ok(utilisateur.getPieces());
     }
 
+    /**
+     * Recup score utilisateur response entity.
+     *
+     * @param authentication the authentication
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @GetMapping("/recupScoreUtilisateur")
     public  ResponseEntity<Integer> recupScoreUtilisateur(Authentication authentication) throws Exception {
         String pseudo = authentication.getName();
@@ -180,6 +250,11 @@ public class JeuController {
         return ResponseEntity.ok(utilisateur.getScore());
     }
 
+    /**
+     * Gets meilleurs.
+     *
+     * @return the meilleurs
+     */
     @GetMapping("/recup5MeilleursScore")
     public ResponseEntity<List<UserOut>> getMeilleurs() {
         List<Utilisateur> utilisateurs = userDAO.find5MeilleursScores();
@@ -188,6 +263,11 @@ public class JeuController {
         return ResponseEntity.ok(usersOut);
     }
 
+    /**
+     * Gets score partie.
+     *
+     * @return the score partie
+     */
     @GetMapping("/recupScorePartie")
     public ResponseEntity<Integer> getScorePartie() {
         int scorePartie = partie.getScorePartie();
@@ -195,6 +275,11 @@ public class JeuController {
         return ResponseEntity.ok(scorePartie);
     }
 
+    /**
+     * Gets nb visible.
+     *
+     * @return the nb visible
+     */
     @GetMapping("/recupNbVisible")
     public ResponseEntity<Integer> getNbVisible() {
         int nbVisible = partie.getNbVisible();
@@ -202,6 +287,11 @@ public class JeuController {
         return ResponseEntity.ok(nbVisible);
     }
 
+    /**
+     * Gets nb coeur.
+     *
+     * @return the nb coeur
+     */
     @GetMapping("/recupNbCoeur")
     public ResponseEntity<Integer> getNbCoeur() {
         int nbCoeurs = partie.getNbCoeurs();
@@ -209,6 +299,11 @@ public class JeuController {
         return ResponseEntity.ok(nbCoeurs);
     }
 
+    /**
+     * Gets nb coeurs max.
+     *
+     * @return the nb coeurs max
+     */
     @GetMapping("/recupNbCoeursMax")
     public ResponseEntity<Integer> getNbCoeursMax() {
         int nbCoeursMax = partie.getNbCoeursMax();

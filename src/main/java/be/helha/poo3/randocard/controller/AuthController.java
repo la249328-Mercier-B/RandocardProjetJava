@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * The type Auth controller.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class AuthController {
@@ -27,10 +30,21 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Instantiates a new Auth controller.
+     *
+     * @param authenticationManager the authentication manager
+     */
     public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Authenticate user response entity.
+     *
+     * @param userIn the user in
+     * @return the response entity
+     */
     @PostMapping("/public/login")
     public ResponseEntity<?> authenticateUser(@RequestBody UserIn userIn) {
         try {

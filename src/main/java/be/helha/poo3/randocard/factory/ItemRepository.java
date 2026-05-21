@@ -10,13 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Item repository.
+ */
 @Repository
 public class ItemRepository {
 
     private final MongoCollection<Document> collection =
             ConnexionMongoDb.getCollection();
 
-    // Récupère tous les items depuis MongoDB
+    /**
+     * Find all list.
+     *
+     * @return the list
+     * @throws Exception the exception
+     */
+// Récupère tous les items depuis MongoDB
     public List<Item> findAll() throws Exception {
         List<Item> items = new ArrayList<>();
 
@@ -31,6 +40,13 @@ public class ItemRepository {
         return items;
     }
 
+    /**
+     * Find by nom optional.
+     *
+     * @param nom the nom
+     * @return the optional
+     * @throws Exception the exception
+     */
     public Optional<Item> findByNom(String nom) throws Exception {
         Document doc = collection.find(new Document("nom", nom)).first();
 

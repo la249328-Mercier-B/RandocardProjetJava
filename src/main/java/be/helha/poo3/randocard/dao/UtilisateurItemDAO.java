@@ -7,11 +7,27 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The interface Utilisateur item dao.
+ */
 public interface UtilisateurItemDAO extends JpaRepository<UtilisateurItem, Integer> {
 
-    // Tous les items d'un utilisateur
+    /**
+     * Find by utilisateur id list.
+     *
+     * @param utilisateurId the utilisateur id
+     * @return the list
+     */
+// Tous les items d'un utilisateur
     List<UtilisateurItem> findByUtilisateurId(Long utilisateurId);
 
-    // Un item précis d'un utilisateur (pour modifier la quantité)
+    /**
+     * Find by utilisateur id and nom item optional.
+     *
+     * @param utilisateurId the utilisateur id
+     * @param nomItem       the nom item
+     * @return the optional
+     */
+// Un item précis d'un utilisateur (pour modifier la quantité)
     Optional<UtilisateurItem> findByUtilisateurIdAndNomItem(Long utilisateurId, String nomItem);
 }

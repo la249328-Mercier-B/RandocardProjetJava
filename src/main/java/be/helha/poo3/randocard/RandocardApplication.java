@@ -6,6 +6,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 
+/**
+ * The type Randocard application.
+ */
 @SpringBootApplication
 public class RandocardApplication {
     public static void main(String[] args) {

@@ -16,11 +16,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Jwt utils.
+ */
 @Component
 public class JwtUtils {
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     private final int jwtExpirationMs = 3600000;   // Durée en millisecondes (1 heure)
 
+    /**
+     * Generate token string.
+     *
+     * @param authentication the authentication
+     * @return the string
+     */
     public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
@@ -34,6 +43,12 @@ public class JwtUtils {
                 .compact();
     }
 
+    /**
+     * Extract jwt from request string.
+     *
+     * @param request the request
+     * @return the string
+     */
     public String extractJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -43,6 +58,12 @@ public class JwtUtils {
     }
 
 
+    /**
+     * Gets username from jwt token.
+     *
+     * @param token the token
+     * @return the username from jwt token
+     */
     public String getUsernameFromJwtToken(String token) {
         return Jwts.parser()
                 .verifyWith(key)
@@ -52,6 +73,12 @@ public class JwtUtils {
                 .getSubject();
     }
 
+    /**
+     * Validate jwt token boolean.
+     *
+     * @param token the token
+     * @return the boolean
+     */
     public boolean validateJwtToken(String token) {
         try {
             Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
@@ -61,6 +88,12 @@ public class JwtUtils {
         }
     }
 
+    /**
+     * Gets roles from jwt token.
+     *
+     * @param token the token
+     * @return the roles from jwt token
+     */
     public List<String> getRolesFromJwtToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(key)
